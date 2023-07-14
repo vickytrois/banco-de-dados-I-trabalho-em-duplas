@@ -65,139 +65,107 @@ public class Filme {
 
     public void insereFilme() {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
-        gerenciadorBD.estabeleceConexao();
-
         String consulta = "INSERT INTO Filme (nomePTBR, nomeOriginal, sinopse, anoLancamento) VALUES (?, ?, ?, ?)";
 
+        gerenciadorBD.estabeleceConexao();
+
         try {
-            PreparedStatement declaracaoDeInsercao;
+            PreparedStatement declaracaoDeInsercao = gerenciadorBD.getConexao().prepareStatement(consulta);
 
-            declaracaoDeInsercao= gerenciadorBD.getConexao().prepareStatement(consulta);
+            declaracaoDeInsercao.setString(1, this.nomePTBR);
+            declaracaoDeInsercao.setString(2, this.nomeOriginal);
+            declaracaoDeInsercao.setString(3, this.sinopse);
+            declaracaoDeInsercao.setInt(4, this.anoLancamento);
 
-            declaracaoDeInsercao.setString(2, this.nomePTBR);
-            declaracaoDeInsercao.setString(3, this.nomeOriginal);
-            declaracaoDeInsercao.setString(4, this.sinopse);
-            declaracaoDeInsercao.setInt(5, this.anoLancamento);
+            declaracaoDeInsercao.executeUpdate();
 
-            declaracaoDeInsercao.execute();
+            System.out.println("Filme inserido com sucesso.");
 
-            gerenciadorBD.fechaConexao();
-        } catch (Exception e) {
-            System.out.println("Falha de banco de dados. Tente novamente mais tarde.");
+        } catch (Exception excecao) {
+            System.out.println("Falha ao inserir filme." + excecao.getMessage());
+        } finally {
+            gerenciadorBD.encerraConexao();
         }
     }
 
     public void atualizaFilme() {
+        GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
+        String consulta = "UPDATE Filme SET nomePTBR = ?, nomeOriginal = ? WHERE idFilme = ?";
+
+        gerenciadorBD.estabeleceConexao();
+
         try {
-            /* Informar qual o Driver JDBC que estou usando */
-            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement declaracaoDeAtualizacao = gerenciadorBD.getConexao().prepareStatement(consulta);
 
-            /* Abrir uma conexão com o Banco de Dados */
-            /* Parâmetros necessários para estabeler uma conexão com o banco
-                1 - URL JDBC: jdbc:mysql://<<IP DA MÁQUINA ONDE ESTÁ O BANCO DE DADOS>>:3306/<<database>>
-                2 - Usuário do banco de dados (nas máquinas da escola usamos o root)
-                3 - Senha do usuário
-            */
-            // Configuração do banco do Norton
-            // Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
+            declaracaoDeAtualizacao.setString(1, this.nomePTBR);
+            declaracaoDeAtualizacao.setString(2, this.nomeOriginal);
+            declaracaoDeAtualizacao.setInt(3, this.idFilme);
 
-            // Configuração do banco da Vic
-             Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
+            declaracaoDeAtualizacao.executeUpdate();
 
-
-            /* Criar uma Sentença SQL */
-            PreparedStatement pstmt = conexao.prepareStatement("update Filme set nomePTBR = ?, nomeOriginal = ? where id = ?");
-
-            /* Parametrizar a Setença SQL */
-            pstmt.setString(1, this.nomePTBR);
-            pstmt.setString(2, this.nomeOriginal);
-            pstmt.setInt(3, this.idFilme);
-
-            /* Executar a Sentença SQL */
-            pstmt.execute();
-
-            /* Fechar a Conexa */
-            pstmt.close();
-            conexao.close();
-        } catch (Exception e) {
-            System.out.println("Falha nossa!!! Volte mais tarde!!!");
+            declaracaoDeAtualizacao.close();
+            gerenciadorBD.encerraConexao();
+        } catch (Exception excecao) {
+            System.out.println("Falha ao atualizar filme." + excecao.getMessage());
+        } finally {
+            gerenciadorBD.encerraConexao();
         }
     }
 
     public void deletaFilme() {
+        GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
+        String consulta = "DELETE FROM Filme WHERE idFilme = ?";
+
+        gerenciadorBD.estabeleceConexao();
+
         try {
-            /* Informar qual o Driver JDBC que estou usando */
-            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement declaracaoDeDelecao = gerenciadorBD.getConexao().prepareStatement(consulta);
 
-            /* Abrir uma conexão com o Banco de Dados */
-            /* Parâmetros necessários para estabeler uma conexão com o banco
-                1 - URL JDBC: jdbc:mysql://<<IP DA MÁQUINA ONDE ESTÁ O BANCO DE DADOS>>:3306/<<database>>
-                2 - Usuário do banco de dados (nas máquinas da escola usamos o root)
-                3 - Senha do usuário
-            */
-            // Configuração do banco do Norton
-            // Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
+            declaracaoDeDelecao.setInt(1, this.idFilme);
+            declaracaoDeDelecao.executeUpdate();
+            System.out.println("Filme deletado com sucesso.");
 
-            // Configuração do banco da Vic
-            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
-
-            /* Criar uma Sentença SQL */
-            PreparedStatement pstmt = conexao.prepareStatement("delete from Filme where idFilme = ?");
-
-            /* Parametrizar a Setença SQL */
-            pstmt.setInt(1, this.idFilme);
-
-            /* Executar a Sentença SQL */
-            pstmt.execute();
-
-            /* Fechar a Conexa */
-            pstmt.close();
-            conexao.close();
-        } catch (Exception e) {
-            System.out.println("Falha nossa!!! Volte mais tarde!!!");
+            declaracaoDeDelecao.close();
+        } catch (Exception excecao) {
+            System.out.println("Falha ao deletar filme." + excecao.getMessage());
+        } finally {
+            gerenciadorBD.encerraConexao();
         }
     }
 
     public List<Filme> selecionaFilme() {
+        GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
+        String consulta = "SELECT * FROM Filme";
         List<Filme> lista = new ArrayList<>();
 
+        gerenciadorBD.estabeleceConexao();
+
         try {
-            /* Informar qual o Driver JDBC que estou usando */
-            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement declaracaoDeSelecao = gerenciadorBD.getConexao().prepareStatement(consulta);
 
-            /* Abrir uma conexão com o Banco de Dados */
-            /* Parâmetros necessários para estabeler uma conexão com o banco
-                1 - URL JDBC: jdbc:mysql://<<IP DA MÁQUINA ONDE ESTÁ O BANCO DE DADOS>>:3306/<<database>>
-                2 - Usuário do banco de dados (nas máquinas da escola usamos o root)
-                3 - Senha do usuário
-            */
-            // Configuração do banco do Norton
-            // Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
+            ResultSet resultadoDaSelecao = declaracaoDeSelecao.executeQuery();
 
-            // Configuração do banco da Vic
-            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/brasileirao","root","12345678");
+            if (resultadoDaSelecao.next()) {
+                int id = resultadoDaSelecao.getInt("idFilme");
+                String nomePTBR = resultadoDaSelecao.getString("nomePTBR");
+                String nomeOriginal = resultadoDaSelecao.getString("nomeOriginal");
+                int anoDeLancamento = resultadoDaSelecao.getInt("anoLancamento");
+                String sinopse = resultadoDaSelecao.getString("Sinopse");
 
-            /* Criar uma Sentença SQL */
-            PreparedStatement pstmt = conexao.prepareStatement("select * from Filme");
-
-            /* Parametrizar a Setença SQL */
-
-            /* Executar a Sentença SQL */
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Filme filme = new Filme();
-                filme.setIdFilme(rs.getInt("idFilme"));
-                filme.setNomePTBR(rs.getString("NomePTBR"));
-                filme.setNomeOriginal(rs.getString("nomeOriginal"));
-                lista.add(filme);
+                System.out.println("ID: " + id + "Título em português: " + nomePTBR);
+                System.out.println("\tTítulo original: " + nomeOriginal);
+                System.out.println("\tAno de lançamento: " + anoDeLancamento);
+                System.out.println("\tSinopse: " + sinopse);
+            } else {
+                System.out.println("Nenhum filme encontrado.");
             }
 
-            /* Fechar a Conexa */
-            rs.close();
-            pstmt.close();
-            conexao.close();
-        } catch (Exception e) {
-            System.out.println("Falha nossa!!! Volte mais tarde!!!");
+            resultadoDaSelecao.close();
+            declaracaoDeSelecao.close();
+        } catch (Exception excecao) {
+            System.out.println("Falha no banco de dados. Tente novamente mais tarde.");
+        } finally {
+            gerenciadorBD.encerraConexao();
         }
 
         return lista;

@@ -12,6 +12,9 @@ public class GerenciadorDeBancoDeDados {
         this.setUrl("jdbc:mysql://localhost:3306/cinema");
         this.setUsuario("root");
         this.setSenha("@Senh4mySQL");
+        // TODO: Norton, confere se essa é a tua senha.
+        // this.setSenha("root");
+        // this.setSenha("12345678");
     }
 
     public Connection getConexao() {
@@ -50,13 +53,13 @@ public class GerenciadorDeBancoDeDados {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection(this.url, this.usuario, this.senha);
-            System.out.println("Conexão ao banco ce dados estabelecida com sucesso.");
+            System.out.println("Conexão ao banco de dados estabelecida com sucesso.");
         } catch (Exception excecao) {
             System.out.println("Falha ao conectar ao banco de dados: " + excecao.getMessage());
         }
     }
 
-    public void fechaConexao() {
+    public void encerraConexao() {
         try {
             if (conexao != null) {
                 conexao.close();
