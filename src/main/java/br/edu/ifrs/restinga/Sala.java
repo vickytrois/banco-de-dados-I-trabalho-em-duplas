@@ -3,14 +3,30 @@ package br.edu.ifrs.restinga;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sala {
     private String nomeSala;
+
+    private int idSala;
     private int capacidade;
 
     public Sala(String nomeSala, int capacidade) {
         this.nomeSala = nomeSala;
         this.capacidade = capacidade;
+    }
+
+    public Sala(){
+
+    }
+
+    public int getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(int idSala) {
+        this.idSala = idSala;
     }
 
     public String getNomeSala() {
@@ -62,8 +78,7 @@ public class Sala {
             PreparedStatement declaracaoDeAtualizacao = gerenciadorBD.getConexao().prepareStatement(consulta);
             declaracaoDeAtualizacao.setString(1, nomeSala);
             declaracaoDeAtualizacao.setInt(2, capacidade);
-            // TODO: criar idSala no script do banco
-            // declaracaoDeAtualizacao.setInt(3, idSala);
+            declaracaoDeAtualizacao.setInt(3, idSala);
 
             declaracaoDeAtualizacao.executeUpdate();
 
@@ -83,8 +98,7 @@ public class Sala {
 
         try {
             PreparedStatement declaracaoDeDelecao = gerenciadorBD.getConexao().prepareStatement(consulta);
-            // TODO: criar idSala no script do banco
-            // declaracaoDeDelecao.setInt(1, idSala);
+            declaracaoDeDelecao.setInt(1, idSala);
 
             declaracaoDeDelecao.executeUpdate();
 
@@ -96,16 +110,15 @@ public class Sala {
         }
     }
 
-    public void selecionaSala() {
+    public List<Sala> selecionaSala() {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
         String consulta = "SELECT * FROM Sala";
-
+        List<Sala> lista = new ArrayList<>();
         gerenciadorBD.estabeleceConexao();
 
         try {
             PreparedStatement declaracaoDeSelecao = gerenciadorBD.getConexao().prepareStatement(consulta);
-            // TODO: criar idSala no script do banco
-            // declaracaoDeSelecao.setInt(1, idSala);
+            declaracaoDeSelecao.setInt(1, idSala);
 
             ResultSet resultadoDaSelecao = declaracaoDeSelecao.executeQuery();
 
@@ -116,8 +129,7 @@ public class Sala {
 
                 System.out.println("ID: " + id + ", Nome: " + nome);
             } else {
-                // TODO: criar idSala no script do banco
-                // System.out.println("Nenhuma sala encontrada com o ID: " + idSala);
+                System.out.println("Nenhuma sala encontrada com o ID: " + idSala);
             }
 
             resultadoDaSelecao.close();
@@ -127,5 +139,6 @@ public class Sala {
         } finally {
             gerenciadorBD.encerraConexao();
         }
+        return lista;
     }
 }

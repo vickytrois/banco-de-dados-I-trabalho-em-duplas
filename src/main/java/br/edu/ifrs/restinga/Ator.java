@@ -3,6 +3,8 @@ package br.edu.ifrs.restinga;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ator {
     private int idAtor;
@@ -11,6 +13,10 @@ public class Ator {
     public Ator(int idAtor, String nomeAtor) {
         this.idAtor = idAtor;
         this.nomeAtor = nomeAtor;
+    }
+
+    public Ator(){
+
     }
 
     public int getIdAtor() {
@@ -90,9 +96,10 @@ public class Ator {
         }
     }
 
-    public void selecionaAtor() {
+    public List<Ator> selecionaAtor() {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
         String consulta = "SELECT * FROM Ator";
+        List<Ator> lista = new ArrayList<>();
 
         gerenciadorBD.estabeleceConexao();
 
@@ -118,5 +125,7 @@ public class Ator {
         } finally {
             gerenciadorBD.encerraConexao();
         }
+
+        return lista;
     }
 }

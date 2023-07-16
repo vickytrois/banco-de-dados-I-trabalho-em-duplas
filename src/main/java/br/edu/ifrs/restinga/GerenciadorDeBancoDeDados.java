@@ -11,10 +11,8 @@ public class GerenciadorDeBancoDeDados {
     public GerenciadorDeBancoDeDados() {
         this.setUrl("jdbc:mysql://localhost:3306/cinema");
         this.setUsuario("root");
-        this.setSenha("@Senh4mySQL");
-        // TODO: Norton, confere se essa é a tua senha.
-        // this.setSenha("root");
-        // this.setSenha("12345678");
+        //this.setSenha("@Senh4mySQL");
+        this.setSenha("Norton159753!");
     }
 
     public Connection getConexao() {

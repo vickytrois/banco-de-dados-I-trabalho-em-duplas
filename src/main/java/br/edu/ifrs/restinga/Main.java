@@ -96,6 +96,7 @@ public class Main {
 
         System.out.print("Digite o título do filme em português: ");
         filme.setNomePTBR(entrada.nextLine());
+        entrada.nextLine();
 
         System.out.print("Digite o título do filme no idioma original: ");
         filme.setNomeOriginal(entrada.nextLine());
@@ -160,27 +161,88 @@ public class Main {
     }
 
     private static void insereAtor() {
-        // TODO: implementar método para o menu.
+        Ator ator = new Ator();
+
+        System.out.print("Digite o nome do ator: ");
+        ator.setNomeAtor(entrada.nextLine());
+        entrada.nextLine();
+
+        ator.insereAtor();
     }
     private static void atualizaAtor() {
-        // TODO: implementar método para o menu.
+        Ator ator = new Ator();
+
+        System.out.print("Digite o nome do ator que deseja atualizar: ");
+        ator.setNomeAtor(entrada.nextLine());
+        entrada.nextLine();
+
+        ator.atualizaAtor();
     }
     private static void deletaAtor() {
-        // TODO: implementar método para o menu.
+        Ator ator = new Ator();
+
+        System.out.println("Digite o id do ator a ser excluído: ");
+        ator.setIdAtor(entrada.nextInt());
+        entrada.nextLine();
+
+        ator.deletaAtor();
     }
     private static void selecionaAtor() {
-        // TODO: implementar método para o menu.
+        Ator ator = new Ator();
+
+        List<Ator> lista = ator.selecionaAtor();
+        // TODO: conferir quais informações vamos listar na opção de seleção
+        // Opções disponíveis:
+        // int idAtor, String nomeAtor
+        // TODO: conferir se o método de seleção já não imprime as informações buscadas
+        // TODO: ver com o GPT uma forma interessante de exibir essas informações
+        System.out.println("ID Ator | Nome Ator");
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i).getIdAtor() + " | " + lista.get(i).getNomeAtor());
+        }
     }
     private static void insereSala() {
-        // TODO: implementar método para o menu.
+        Sala sala = new Sala();
+
+        System.out.print("Digite o nome da sala: ");
+        sala.setNomeSala(entrada.nextLine());
+        System.out.print("Digite a capacidade da sala: ");
+        sala.setCapacidade(entrada.nextInt());
+
+        sala.insereSala();
     }
     private static void atualizaSala() {
-        // TODO: implementar método para o menu.
+        Sala sala = new Sala();
+
+        System.out.print("Digite o nome da sala que deseja atualizar: ");
+        sala.setNomeSala(entrada.nextLine());
+        entrada.nextLine();
+
+        sala.atualizaSala();
     }
     private static void deletaSala() {
-        // TODO: implementar método para o menu.
+        Sala sala = new Sala();
+
+        System.out.println("Digite o id da sala a ser excluída: ");
+
+        sala.setIdSala(entrada.nextInt());
+        entrada.nextInt();
+
+        sala.deletaSala();
     }
     private static void selecionaSala() {
-        // TODO: implementar método para o menu.
+        Sala sala = new Sala();
+
+        List<Sala> lista = sala.selecionaSala();
+        // TODO: conferir quais informações vamos listar na opção de seleção
+        // Opções disponíveis:
+        // int idAtor, String nomeAtor
+        // TODO: conferir se o método de seleção já não imprime as informações buscadas
+        // TODO: ver com o GPT uma forma interessante de exibir essas informações
+        System.out.println("ID Ator | Nome Ator");
+        for (int i = 0; i < lista.size(); i++) {
+            //TODO ADICIONAR IDSALA  NO BANCO DE DADOS
+            //System.out.println(lista.get(i).getIdSala() + " | " + lista.get(i).getNomeSala());
+        }
     }
 }
