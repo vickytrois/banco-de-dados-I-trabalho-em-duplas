@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Sala {
     private String nomeSala;
-
     private int idSala;
     private int capacidade;
 
@@ -47,9 +46,7 @@ public class Sala {
 
     public void insereSala() {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
-        // já que vamos ter que atualizar o script do banco para adicionar o idSala,
-        // TODO: decidir se queremos refatorar os nomes das colunas para que todos comecem com letra minúscula
-        String consulta = "INSERT INTO Sala (NomeSala, Capacidade) VALUES (?, ?)";
+        String consulta = "INSERT INTO Sala (nomeSala, capacidade) VALUES (?, ?)";
 
         gerenciadorBD.estabeleceConexao();
 
@@ -70,7 +67,7 @@ public class Sala {
 
     public void atualizaSala() {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
-        String consulta = "UPDATE Sala SET NomeSala = ? Capacidade = ? WHERE idSala = ?";
+        String consulta = "UPDATE Sala SET nomeSala = ? capacidade = ? WHERE idSala = ?";
 
         gerenciadorBD.estabeleceConexao();
 
@@ -114,6 +111,7 @@ public class Sala {
         GerenciadorDeBancoDeDados gerenciadorBD = new GerenciadorDeBancoDeDados();
         String consulta = "SELECT * FROM Sala";
         List<Sala> lista = new ArrayList<>();
+
         gerenciadorBD.estabeleceConexao();
 
         try {
@@ -124,10 +122,10 @@ public class Sala {
 
             if (resultadoDaSelecao.next()) {
                 int id = resultadoDaSelecao.getInt("idSala");
-                String nome = resultadoDaSelecao.getString("NomeSala");
+                String nome = resultadoDaSelecao.getString("nomeSala");
                 int capacidade = resultadoDaSelecao.getInt("capacidade");
 
-                System.out.println("ID: " + id + ", Nome: " + nome);
+                System.out.println("ID: " + id + ", Nome: " + nome + " , Capacidade: " + capacidade);
             } else {
                 System.out.println("Nenhuma sala encontrada com o ID: " + idSala);
             }

@@ -150,7 +150,7 @@ public class Filme {
                 String nomePTBR = resultadoDaSelecao.getString("nomePTBR");
                 String nomeOriginal = resultadoDaSelecao.getString("nomeOriginal");
                 int anoDeLancamento = resultadoDaSelecao.getInt("anoLancamento");
-                String sinopse = resultadoDaSelecao.getString("Sinopse");
+                String sinopse = resultadoDaSelecao.getString("sinopse");
 
                 System.out.println("ID: " + id + "Título em português: " + nomePTBR);
                 System.out.println("\tTítulo original: " + nomeOriginal);

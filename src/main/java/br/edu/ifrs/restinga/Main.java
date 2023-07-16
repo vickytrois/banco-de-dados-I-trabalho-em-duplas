@@ -241,8 +241,7 @@ public class Main {
         // TODO: ver com o GPT uma forma interessante de exibir essas informações
         System.out.println("ID Ator | Nome Ator");
         for (int i = 0; i < lista.size(); i++) {
-            //TODO ADICIONAR IDSALA  NO BANCO DE DADOS
-            //System.out.println(lista.get(i).getIdSala() + " | " + lista.get(i).getNomeSala());
+            System.out.println(lista.get(i).getIdSala() + " | " + lista.get(i).getNomeSala());
         }
     }
 }
