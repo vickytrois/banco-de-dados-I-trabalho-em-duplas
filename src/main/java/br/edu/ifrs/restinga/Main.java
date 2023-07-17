@@ -24,6 +24,7 @@ public class Main {
 
             System.out.println("Digite uma opção válida: ");
             opcao = entrada.nextInt();
+            entrada.nextLine();
 
             switch (opcao) {
                 case 0 -> {
@@ -208,6 +209,7 @@ public class Main {
         sala.setNomeSala(entrada.nextLine());
         System.out.print("Digite a capacidade da sala: ");
         sala.setCapacidade(entrada.nextInt());
+        entrada.nextLine();
 
         sala.insereSala();
     }
@@ -226,7 +228,7 @@ public class Main {
         System.out.println("Digite o id da sala a ser excluída: ");
 
         sala.setIdSala(entrada.nextInt());
-        entrada.nextInt();
+        entrada.nextLine();
 
         sala.deletaSala();
     }
